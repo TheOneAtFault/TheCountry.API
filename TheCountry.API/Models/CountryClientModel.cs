@@ -7,6 +7,6 @@ namespace TheCountry.API.Models
         [JsonPropertyName("countrylist")]
         public List<CountrySummaryModel>? CountryList { get; set; }
         [JsonPropertyName("pagenation")]
-        public Pager? Pagenation { get; set; }
+        public PagerModel? Pagenation { get; set; }
     }
 }

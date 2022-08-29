@@ -2,7 +2,7 @@
 
 namespace TheCountry.API.Models
 {
-    public class Pager
+    public class PagerModel
     {
         [JsonPropertyName("total")]
         public int? Total { get; set; }

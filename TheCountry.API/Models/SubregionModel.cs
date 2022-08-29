@@ -2,7 +2,7 @@
 
 namespace TheCountry.API.Models
 {
-    public class Subregion
+    public class SubregionModel
     {
         [JsonPropertyName("name")]
         public string? Name { get; set; }

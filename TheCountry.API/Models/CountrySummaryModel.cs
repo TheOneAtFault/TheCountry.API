@@ -11,6 +11,6 @@ namespace TheCountry.API.Models
         [JsonPropertyName("subregion")]
         public string? Subregion { get; set; }
         [JsonPropertyName("pagnation")]
-        public Pager? Pagnation { get; set; }
+        public PagerModel? Pagnation { get; set; }
     }
 }

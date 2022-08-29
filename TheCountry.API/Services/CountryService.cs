@@ -37,43 +37,29 @@ public class CountryService : ICountryService
                     _memoryCache.Set("CountryAPIMap", countryAPIMap, TimeSpan.FromMinutes(60));
                 }
 
-                Pager pager = new Pager()
+                var finalCountryList = countryAPIMap.Select(item => new CountrySummaryModel
+                {
+                    Name = item.Name?.Common,
+                    Region = item.Region,
+                    Subregion = item.Subregion
+                });
+
+                if (!string.IsNullOrEmpty(search))
+                    finalCountryList = finalCountryList.Where(p => p.Name.ToLower().Contains(search));
+
+                PagerModel pager = new PagerModel()
                 {
                     CurrentPage = pagnationCurrentPage,
-                    Total = countryAPIMap.Count,
+                    Total = finalCountryList.ToList().Count,
                     TotalItemsToShow = pagnationTotalItemsToGet,
-                    PageTotal = Math.Ceiling(countryAPIMap.Count / (decimal)pagnationTotalItemsToGet)
+                    PageTotal = Math.Ceiling(finalCountryList.ToList().Count / (decimal)pagnationTotalItemsToGet)
                 };
-
-                var finalCountryList = new List<CountrySummaryModel>();
-                if (!string.IsNullOrEmpty(search))
-                {
-                    finalCountryList = (countryAPIMap.Where(p => p.Name.Common.ToLower().Contains(search)).Select(item => new CountrySummaryModel
-                    {
-                        Name = item.Name?.Common,
-                        Region = item.Region,
-                        Subregion = item.Subregion
-                    }).OrderBy(o => o.Name)
-                    .Skip((pagnationCurrentPage - 1) * pagnationTotalItemsToGet)
-                    .Take(pagnationTotalItemsToGet))
-                    .ToList();
-                }
-                else
-                {
-                    finalCountryList = (countryAPIMap.Select(item => new CountrySummaryModel
-                    {
-                        Name = item.Name?.Common,
-                        Region = item.Region,
-                        Subregion = item.Subregion
-                    }).OrderBy(o => o.Name)
-                    .Skip((pagnationCurrentPage - 1) * pagnationTotalItemsToGet)
-                    .Take(pagnationTotalItemsToGet))
-                    .ToList();
-                }
 
                 CountryClientModel countryClient = new CountryClientModel()
                 {
-                    CountryList = finalCountryList,
+                    CountryList = finalCountryList.OrderBy(o => o.Name)
+                            .Skip((pagnationCurrentPage - 1) * pagnationTotalItemsToGet)
+                            .Take(pagnationTotalItemsToGet).ToList(),
                     Pagenation = pager
                 };
 
@@ -82,7 +68,7 @@ public class CountryService : ICountryService
             }
             catch (Exception ex)
             {
-                return null;
+                return "";
             }
         }
     }
@@ -220,7 +206,7 @@ public class CountryService : ICountryService
                         .Select(s => new RegionModel { Population = s.Population, Name = s.Name, SubRegion = s.Subregion }).ToList();
                 }
 
-                Subregion _subregion = new Subregion()
+                SubregionModel _subregion = new SubregionModel()
                 {
                     Name = subregion,
                     Population = subregionList.Sum(s => s.Population),
