@@ -7,7 +7,8 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("https://localhost:7232").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            //https://localhost:7232
+            policy.WithOrigins("https://thecountry.azurewebsites.net").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
         });
 });
 builder.Services.AddMemoryCache();

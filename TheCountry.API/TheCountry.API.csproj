@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\CountryClientModel.cs" />
+    <Compile Remove="Models\CountryModel.cs" />
+    <Compile Remove="Models\CountrySummaryModel.cs" />
+    <Compile Remove="Models\PagerModel.cs" />
+    <Compile Remove="Models\RegionClientModel.cs" />
+    <Compile Remove="Models\RegionModel.cs" />
+    <Compile Remove="Models\SubregionModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RestSharp" Version="108.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
